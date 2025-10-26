@@ -93,16 +93,34 @@ public class Main {
 
 			chapterBuilder.append(verseNumber).append(". ").append(verseText).append("\n");
 
-			// create Verse object and collect
+			// create or append to Verse object
 			if(!verseText.isEmpty()) {
-                Verse v = new Verse();
+                int verseNum;
                 try {
-                    v.setVerseNumber(Integer.parseInt(verseNumber));
+                    verseNum = Integer.parseInt(verseNumber);
                 } catch (NumberFormatException e) {
-                    v.setVerseNumber(-1);
+                    verseNum = -1;
                 }
-                v.setVerse(verseText);
-                versesList.add(v);
+                
+                // Look for existing verse with this number
+                Verse existingVerse = null;
+                for (Verse v : versesList) {
+                    if (v.getVerseNumber() == verseNum) {
+                        existingVerse = v;
+                        break;
+                    }
+                }
+                
+                if (existingVerse != null) {
+                    // Append to existing verse
+                    existingVerse.setVerse(existingVerse.getVerse() + " " + verseText);
+                } else {
+                    // Create new verse
+                    Verse v = new Verse();
+                    v.setVerseNumber(verseNum);
+                    v.setVerse(verseText);
+                    versesList.add(v);
+                }
             }
 		}
 
