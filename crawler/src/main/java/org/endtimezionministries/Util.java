@@ -5,7 +5,6 @@ import org.endtimezionministries.model.APIResponse;
 import org.endtimezionministries.model.internal.Chapter;
 import org.endtimezionministries.model.internal.Verse;
 import org.endtimezionministries.model.internal.BibleBook;
-import org.endtimezionministries.repository.Data;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,7 +17,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.endtimezionministries.repository.Data.bibleBooks;
-import static org.endtimezionministries.repository.Data.bookNames;
 
 public class Util {
 
@@ -153,7 +151,8 @@ public class Util {
         }
         if (bibleBook == null) {
             bibleBook = new BibleBook();
-            bibleBook.setBookName(bookNames.get(bookIndex));
+            // store book code (e.g. GEN) as the BibleBook.bookName so lookups use the code
+            bibleBook.setBookName(bookCode);
             bibleBooks.add(bibleBook);
         }
 
@@ -201,4 +200,15 @@ public class Util {
         return sb.toString().replaceAll("&quot;", "\"").replaceAll("&amp;", "&").replaceAll("&lt;", "<")
                 .replaceAll("&gt;", ">");
     }
+
+    public static void writeToOutputXMLFile() {
+        try {
+            org.endtimezionministries.repository.Data.writeBibleBooksToXml();
+            System.out.println("Wrote output XML to: " + org.endtimezionministries.repository.Data.outputXMLFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Failed to write output XML: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+     }
 }

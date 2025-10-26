@@ -5,8 +5,7 @@ import org.endtimezionministries.repository.Data;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.endtimezionministries.Util.fetchBibleChapter;
-import static org.endtimezionministries.Util.parseVerses;
+import static org.endtimezionministries.Util.*;
 
 public class Main {
 
@@ -26,6 +25,8 @@ public class Main {
 		} catch (IOException | InterruptedException e) {
 			System.err.println("Error fetching Bible chapter: " + e.getMessage());
 			e.printStackTrace();
+            return;
 		}
+        writeToOutputXMLFile();
 	}
 }
