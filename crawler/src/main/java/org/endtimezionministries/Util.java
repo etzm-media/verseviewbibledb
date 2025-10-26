@@ -5,6 +5,7 @@ import org.endtimezionministries.model.APIResponse;
 import org.endtimezionministries.model.internal.Chapter;
 import org.endtimezionministries.model.internal.Verse;
 import org.endtimezionministries.model.internal.BibleBook;
+import org.endtimezionministries.repository.Data;
 
 import java.io.IOException;
 import java.net.URI;
@@ -17,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.endtimezionministries.repository.Data.bibleBooks;
+import static org.endtimezionministries.repository.Data.bookNames;
 
 public class Util {
 
@@ -45,7 +47,7 @@ public class Util {
         return gson.fromJson(response.body(), APIResponse.class);
     }
 
-    public static void parseVerses(String content) {
+    public static void parseVerses(String content, int bookIndex) {
         if (content == null || content.isEmpty())
             return;
 
@@ -151,7 +153,7 @@ public class Util {
         }
         if (bibleBook == null) {
             bibleBook = new BibleBook();
-            bibleBook.setBookName(bookCode);
+            bibleBook.setBookName(bookNames.get(bookIndex));
             bibleBooks.add(bibleBook);
         }
 
