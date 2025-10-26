@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.endtimezionministries.repository.Data.bibleVerses;
+import static org.endtimezionministries.repository.Data.bibleBooks;
 
 public class Util {
 

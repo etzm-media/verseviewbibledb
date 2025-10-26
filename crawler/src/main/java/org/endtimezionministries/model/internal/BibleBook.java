@@ -2,7 +2,7 @@ package org.endtimezionministries.model.internal;
 
 import java.util.List;
 
-public class BibleVerse {
+public class BibleBook {
     String bookName;
     List<Chapter> chapters;
 

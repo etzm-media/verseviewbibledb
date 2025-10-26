@@ -1,13 +1,15 @@
 package org.endtimezionministries.repository;
 
-import org.endtimezionministries.model.internal.BibleVerse;
+import org.endtimezionministries.model.internal.BibleBook;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Map.entry;
 
 public class Data {
-    public static final BibleVerse bibleVerses = new BibleVerse();
+    public static final List<BibleBook> bibleBooks = new ArrayList<>();
     public static final Map<String, Integer> bookAndMaxChapter = Map.<String, Integer>ofEntries(
             entry("GEN", 50),
             entry("EXO", 40),
