@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.endtimezionministries.model.APIResponse;
 import org.endtimezionministries.model.internal.Chapter;
 import org.endtimezionministries.model.internal.Verse;
+import org.endtimezionministries.model.internal.BibleBook;
 
 import java.io.IOException;
 import java.net.URI;
@@ -130,7 +131,7 @@ public class Util {
                 chapterBuilder.append(fallback).append("\n");
         }
 
-        // store into bibleVerses model as Chapter and Verse objects
+        // store into bibleBooks list as Chapter and Verse objects inside a BibleBook
         Chapter chapterObj = new Chapter();
         if (chapterNum <= 0)
             chapterNum = 1;
@@ -140,14 +141,24 @@ public class Util {
         List<Verse> verses = (versesList == null) ? new ArrayList<>() : versesList;
         chapterObj.setVerses(verses);
 
-        // ensure bibleVerses book name and chapter list exist
-        if (bibleVerses.getBookName() == null) {
-            bibleVerses.setBookName(bookCode);
+        // find or create the BibleBook entry for this bookCode
+        BibleBook bibleBook = null;
+        for (BibleBook b : bibleBooks) {
+            if (bookCode.equals(b.getBookName())) {
+                bibleBook = b;
+                break;
+            }
         }
-        List<Chapter> chapters = bibleVerses.getChapters();
+        if (bibleBook == null) {
+            bibleBook = new BibleBook();
+            bibleBook.setBookName(bookCode);
+            bibleBooks.add(bibleBook);
+        }
+
+        List<Chapter> chapters = bibleBook.getChapters();
         if (chapters == null) {
             chapters = new ArrayList<>();
-            bibleVerses.setChapters(chapters);
+            bibleBook.setChapters(chapters);
         }
 
         // replace existing chapter if present, otherwise add
